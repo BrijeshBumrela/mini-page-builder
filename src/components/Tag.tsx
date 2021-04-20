@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import Draggable, { ControlPosition, DraggableEvent, DraggableEventHandler } from 'react-draggable';
+import Draggable, { ControlPosition, DraggableEvent } from 'react-draggable';
 
 interface ITagProps {
     type: string,
@@ -63,7 +63,7 @@ const Tag: React.FC<ITagProps> = ({ type, onCreatingNewBlock }) => {
             onDrag={e=>handleDrag(e)}
             // {...optionalProps}
             position={{x: 0, y: 0}}
-            >
+        >
             <div className="label-box" ref={eleRef}>
                 <h5>{type}</h5>
             </div>

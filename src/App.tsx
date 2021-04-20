@@ -23,43 +23,57 @@ const getDefaultValues = ({ type, xPos, yPos }: newBlockProperties): IDraggableC
 
 function App() {
   const [components, setComponents] = useState<IDraggableComponent[]>([]);
-  const [selectedComponent, setSelectedComponent] = useState<null | IDraggableComponent>(null)
+  const [selectedComponent, setSelectedComponent] = useState<null | IDraggableComponent>(null);
+  const [shouldOpenModal, setShouldOpenModal] = useState(false);
 
   const handleNewBlockCreation = (e: newBlockProperties) => {
     const newComponentValue = getDefaultValues(e);
     setComponents(components => [...components, newComponentValue])
     setSelectedComponent(newComponentValue);
+    setShouldOpenModal(true);
   }
 
   const handleOk = (updatedBlockValues: IDraggableComponent) => {
-    console.log(updatedBlockValues)
     setSelectedComponent(null);
+    setShouldOpenModal(false);
     setComponents(components => components.map(component => component.id === updatedBlockValues.id ? { ...updatedBlockValues, saved: true } : component))
   };
-
 
   const handleCancel = () => {
     if (!selectedComponent) return;
     if (!selectedComponent.saved) {
       setComponents(components => components.filter(component => component.id !== selectedComponent.id));
-      setSelectedComponent(null);
     }
+    setSelectedComponent(null);
+    setShouldOpenModal(false);
   };
+
+  const handleSelect = (id: string) => {
+    const selectedComponent = components.find(component => component.id === id);
+    if (!selectedComponent) return;
+    setSelectedComponent(selectedComponent);
+  }
+
+  const openModalWithSelectedBlock = () => {
+    setShouldOpenModal(true)
+  }
+
+  console.log(!!selectedComponent && shouldOpenModal)
 
   return (
     <>
       <Row style={{ height: '100vh' }}>
         <Col span={18}>
           <div>
-            {components.map((component, index) => <Draggable {...component} key={index} />)}
+            {components.map((component, index) => <Draggable selected={!!(selectedComponent && selectedComponent.id === component.id)} block={component} onSelect={handleSelect} key={index} />)}
           </div>
         </Col>
         <Col span={6}>
           <SideBar onCreatingNewBlock={handleNewBlockCreation} />
         </Col>
       </Row>
-      <Modal title="Edit Label" visible={!!selectedComponent} onCancel={handleCancel} footer={null}>
-        {!!selectedComponent && <FormComponent onSubmit={handleOk} selectedComponent={selectedComponent} />}
+      <Modal title="Edit Label" visible={!!selectedComponent && shouldOpenModal} onCancel={handleCancel} footer={null}>
+        {!!selectedComponent && <FormComponent key={selectedComponent.id} onSubmit={handleOk} selectedComponent={selectedComponent} />}
       </Modal>
     </>
   );

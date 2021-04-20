@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Form, Input, Button, Radio } from 'antd';
+import { Form, Input, Button } from 'antd';
 import { IDraggableComponent } from './Draggable';
 
 const FormComponent: React.FC<{ 
@@ -9,7 +9,7 @@ const FormComponent: React.FC<{
 
     const [blockValue, setBlockValue] = useState<IDraggableComponent>(selectedComponent)
 
-    const { type,
+    const { 
         text,
         X,
         Y,
