@@ -7,7 +7,8 @@ export interface IDraggableComponent {
     Y: number,
     fontSize: number,
     fontWeight: number,
-    saved: false
+    saved: false,
+    id: string
 }
 
 const Draggable: React.FC<IDraggableComponent> = ({ X, Y }) => {
