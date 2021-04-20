@@ -7,15 +7,17 @@ export interface IDraggableComponent {
     Y: number,
     fontSize: number,
     fontWeight: number,
-    saved: false,
+    saved: boolean,
     id: string
 }
 
-const Draggable: React.FC<IDraggableComponent> = ({ X, Y }) => {
+const Draggable: React.FC<IDraggableComponent> = ({ X, Y, text, fontSize, fontWeight }) => {
+    console.log("X, Y values", X, Y)
+
     return <ReactDraggable
-        position={{ x: X, y: Y }}
+        position={{ x: Number(X), y: Number(Y) }}
     >
-        <div>hello</div>
+        <div style={{ fontSize, fontWeight }}>{ text }</div>
     </ReactDraggable>
 }
 

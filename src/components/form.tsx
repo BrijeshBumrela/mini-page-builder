@@ -1,21 +1,54 @@
 import React, { useState } from 'react';
 import { Form, Input, Button, Radio } from 'antd';
+import { IDraggableComponent } from './Draggable';
 
-type RequiredMark = boolean | 'optional';
+const FormComponent: React.FC<{ 
+        selectedComponent: IDraggableComponent, 
+        onSubmit: (selectedComponent: IDraggableComponent) => void 
+    }> = ({ selectedComponent, onSubmit }) => {
 
-const FormComponent = () => {
+    const [blockValue, setBlockValue] = useState<IDraggableComponent>(selectedComponent)
+
+    const { type,
+        text,
+        X,
+        Y,
+        fontSize,
+        fontWeight,
+    } = blockValue;
+
+    const handleChange = (e: React.FormEvent<HTMLFormElement>) => {
+        setBlockValue(prev => ({
+            ...prev,
+            // @ts-ignore
+            [e.target.name]: e.target.value
+        }))
+    }
+
+    const handleSubmit = () => onSubmit(blockValue);
+
     return (
         <Form
             layout="vertical"
+            onChange={e => handleChange(e)}
         >
-            <Form.Item label="Field A">
-                <Input placeholder="input placeholder" />
+            <Form.Item label="Text">
+                <Input name="text" value={text} />
             </Form.Item>
-            <Form.Item label="Field B">
-                <Input placeholder="input placeholder" />
+            <Form.Item label="X">
+                <Input name="X" value={X} />
+            </Form.Item>
+            <Form.Item label="Y">
+                <Input name="Y" value={Y} />
+            </Form.Item>
+            <Form.Item label="fontSize">
+                <Input name="fontSize" value={fontSize} />
+            </Form.Item>
+            <Form.Item label="fontWeight">
+                <Input name="fontWeight" value={fontWeight} />
             </Form.Item>
             <Form.Item>
-                <Button type="primary">Submit</Button>
+                <Button onClick={() => handleSubmit()} type="primary">Submit</Button>
             </Form.Item>
         </Form>
     );

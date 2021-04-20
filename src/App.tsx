@@ -23,16 +23,28 @@ const getDefaultValues = ({ type, xPos, yPos }: newBlockProperties): IDraggableC
 
 function App() {
   const [components, setComponents] = useState<IDraggableComponent[]>([]);
-  const [selectedComponentId, setSelectedComponentId] = useState<null | string>(null)
+  const [selectedComponent, setSelectedComponent] = useState<null | IDraggableComponent>(null)
 
   const handleNewBlockCreation = (e: newBlockProperties) => {
     const newComponentValue = getDefaultValues(e);
     setComponents(components => [...components, newComponentValue])
-    setSelectedComponentId(newComponentValue.id);
+    setSelectedComponent(newComponentValue);
   }
 
-  const handleOk = () => { };
-  const handleCancel = () => { };
+  const handleOk = (updatedBlockValues: IDraggableComponent) => {
+    console.log(updatedBlockValues)
+    setSelectedComponent(null);
+    setComponents(components => components.map(component => component.id === updatedBlockValues.id ? { ...updatedBlockValues, saved: true } : component))
+  };
+
+
+  const handleCancel = () => {
+    if (!selectedComponent) return;
+    if (!selectedComponent.saved) {
+      setComponents(components => components.filter(component => component.id !== selectedComponent.id));
+      setSelectedComponent(null);
+    }
+  };
 
   return (
     <>
@@ -46,8 +58,8 @@ function App() {
           <SideBar onCreatingNewBlock={handleNewBlockCreation} />
         </Col>
       </Row>
-      <Modal title="Edit Label" visible={!!selectedComponentId} onOk={handleOk} onCancel={handleCancel}>
-        <FormComponent />
+      <Modal title="Edit Label" visible={!!selectedComponent} onCancel={handleCancel} footer={null}>
+        {!!selectedComponent && <FormComponent onSubmit={handleOk} selectedComponent={selectedComponent} />}
       </Modal>
     </>
   );
