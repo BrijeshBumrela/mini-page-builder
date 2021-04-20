@@ -1,0 +1,22 @@
+.sidebar {
+    border-left: 2px solid brown;
+    background: black;
+    padding: 10px;
+    height: 100%;
+}
+
+
+.label-box {
+    background-color: whitesmoke;
+    min-height: 40px;
+    margin: 10px 0;
+    display: flex;
+    align-items: center;
+    font-size: 20px;
+    padding-left: 20px;
+}
+
+.label-box h5 {
+    margin: 0;
+    padding: 0;
+}
