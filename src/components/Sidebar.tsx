@@ -1,18 +1,17 @@
 import React from 'react';
 import './Sidebar.css';
+import Tag, { newBlockProperties } from './Tag';
 
-const SideBar = () => {
+interface ISideBarProps {
+    onCreatingNewBlock: (e: newBlockProperties) => void
+}
+
+const SideBar: React.FC<ISideBarProps> = ({ onCreatingNewBlock }) => {
     return <section className="sidebar">
         <h3 style={{ color: 'white', fontWeight: 600 }}>BLOCKS</h3>
-        <div className="label-box">
-            <h5>Label</h5>
-        </div>
-        <div className="label-box">
-            <h5>Input</h5>
-        </div>
-        <div className="label-box">
-            <h5>Button</h5>
-        </div>
+        <Tag onCreatingNewBlock={onCreatingNewBlock} type="Input"></Tag>
+        <Tag onCreatingNewBlock={onCreatingNewBlock} type="Label"></Tag>
+        <Tag onCreatingNewBlock={onCreatingNewBlock} type="Button"></Tag>
     </section>
 }
 
