@@ -77,9 +77,13 @@ const Draggable: React.FC<{
   return (
     <ReactDraggable
       onDrag={handleStop}
+      bounds="parent"
       position={{ x: Number(X), y: Number(Y) }}
     >
-      <div onClick={(e) => onSelect(id, e)} style={{ display: "inline-block" }}>
+      <div
+        onClick={(e) => onSelect(id, e)}
+        style={{ display: "inline-block", position: "fixed" }}
+      >
         {element()}
       </div>
     </ReactDraggable>
