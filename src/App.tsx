@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { Col, Modal, Row } from "antd";
 import { v4 as uuid } from "uuid";
 
@@ -55,13 +55,15 @@ function App() {
   const handleCancel = () => {
     if (!selectedComponent) return;
     if (!selectedComponent.saved) {
-      setComponents((components) =>
-        components.filter((component) => component.id !== selectedComponent.id)
-      );
+      deleteBlock(selectedComponent.id);
     }
     setSelectedComponent(null);
     setShouldOpenModal(false);
   };
+
+  const deleteBlock = (id: string) => {
+    setComponents(components => components.filter(component => component.id !== id));
+  }
 
   const handleSelect = (
     id: string,
@@ -74,26 +76,17 @@ function App() {
     setSelectedComponent(selectedComponent);
   };
 
-  const handleKeyPress = (e: KeyboardEvent) => {
-    if (e.key.toLowerCase() === "enter" && selectedComponent) {
-      setShouldOpenModal(true);
-    }
-    if (e.key.toLowerCase() === "delete" && selectedComponent) {
-      setShouldOpenModal(true);
-    }
-  };
-
-  const handleKeyPress2 = (e: React.KeyboardEvent<HTMLDivElement>) => {
+  const handleKeyPress = (e: React.KeyboardEvent<HTMLDivElement>) => {
     if (e.nativeEvent.key.toLowerCase() === 'enter' && selectedComponent) {
       setShouldOpenModal(true);
     }
-    // if (e.key.toLowerCase() === 'delete' && selectedComponent) {
-    //   setShouldOpenModal(true);
-    // }
+    if (e.key.toLowerCase() === 'delete' && selectedComponent) {
+      deleteBlock(selectedComponent.id)
+    }
   };
 
   return (
-    <div tabIndex={0} onKeyPress={(e) => handleKeyPress2(e)}>
+    <div tabIndex={0} onKeyUp={(e) => handleKeyPress(e)}>
       <Row style={{ height: "100vh" }}>
         <Col span={18}>
           <div style={{ height: "100%", width: "100%" }}>
