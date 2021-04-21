@@ -1,9 +1,7 @@
-# Simple Block Creator
+# Mini Page Builder
 
 The repository for Almabase's Frontend challenge
 Created with `React (create-react-app)` and `typescript`.
-
-<br />
 
 ### How to Run the code
 
