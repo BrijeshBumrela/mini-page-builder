@@ -26,7 +26,7 @@ const Draggable: React.FC<{
     if (type.toLowerCase() === "label") {
       return (
         <label
-          className={"" + (selected ? "border" : "")}
+          className={"" + (selected ? "border-brijesh" : "")}
           style={{ fontSize: Number(fontSize), padding: "5px", fontWeight }}
         >
           {text}
@@ -35,7 +35,7 @@ const Draggable: React.FC<{
     } else if (type.toLowerCase() === "input") {
       return (
         <input
-          className={"" + (selected ? "border" : "")}
+          className={"" + (selected ? "border-brijesh" : "")}
           style={{ fontSize: Number(fontSize), padding: "5px", fontWeight }}
           readOnly
           value={text}
@@ -44,7 +44,7 @@ const Draggable: React.FC<{
     } else if (type.toLowerCase() === "button") {
       return (
         <button
-          className={"" + (selected ? "border" : "")}
+          className={"" + (selected ? "border-brijesh" : "")}
           style={{
             fontSize: Number(fontSize),
             padding: "5px",
