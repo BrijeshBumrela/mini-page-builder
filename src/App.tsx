@@ -110,10 +110,6 @@ function App() {
     );
   };
 
-  const disableAll = () => {
-    setSelectedComponent(null);
-  };
-
   return (
     <div tabIndex={0} onKeyUp={(e) => handleKeyPress(e)}>
       <Row style={{ height: "100vh" }}>
@@ -132,7 +128,7 @@ function App() {
             ))}
           </div>
         </Col>
-        <Col span={6} onClick={disableAll}>
+        <Col span={6}>
           <SideBar onCreatingNewBlock={handleNewBlockCreation} />
         </Col>
       </Row>
