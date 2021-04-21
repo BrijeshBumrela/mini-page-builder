@@ -1,5 +1,5 @@
 import React from "react";
-import ReactDraggable from "react-draggable";
+import ReactDraggable, { DraggableData, DraggableEvent } from "react-draggable";
 import "./Draggable.css";
 export interface IDraggableComponent {
   type: string;
@@ -12,6 +12,12 @@ export interface IDraggableComponent {
   id: string;
 }
 
+export interface IUpdatePosition {
+  id: string;
+  xPos: number;
+  yPos: number;
+}
+
 const Draggable: React.FC<{
   block: IDraggableComponent;
   onSelect: (
@@ -19,7 +25,8 @@ const Draggable: React.FC<{
     e: React.MouseEvent<HTMLDivElement, MouseEvent>
   ) => void;
   selected: boolean;
-}> = ({ block, onSelect, selected }) => {
+  updatePosition: (data: IUpdatePosition) => void;
+}> = ({ block, onSelect, selected, updatePosition }) => {
   const { X, Y, text, fontSize, fontWeight, type, id, saved } = block;
 
   const element = () => {
@@ -66,8 +73,20 @@ const Draggable: React.FC<{
     };
   }
 
+  const handleDrag = (e: DraggableEvent, ui: DraggableData) => {
+    updatePosition({
+      id,
+      xPos: X + ui.deltaX,
+      // @ts-ignore
+      yPos: Y + ui.deltaY,
+    });
+  };
+
   return (
-    <ReactDraggable {...optionalProp}>
+    <ReactDraggable
+      onDrag={handleDrag}
+      position={{ x: Number(X), y: Number(Y) }}
+    >
       <div onClick={(e) => onSelect(id, e)} style={{ display: "inline-block" }}>
         {element()}
       </div>

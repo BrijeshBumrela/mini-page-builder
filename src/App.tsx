@@ -1,11 +1,14 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Col, Modal, Row } from "antd";
 import { v4 as uuid } from "uuid";
 
 import "antd/dist/antd.css";
 
 import "./App.css";
-import Draggable, { IDraggableComponent } from "./components/Draggable";
+import Draggable, {
+  IDraggableComponent,
+  IUpdatePosition,
+} from "./components/Draggable";
 import SideBar from "./components/Sidebar";
 import { newBlockProperties } from "./components/Tag";
 import FormComponent from "./components/form";
@@ -26,7 +29,13 @@ const getDefaultValues = ({
 });
 
 function App() {
-  const [components, setComponents] = useState<IDraggableComponent[]>([]);
+  const [components, setComponents] = useState<IDraggableComponent[]>(() => {
+    const blocks = localStorage.getItem("blocks");
+    if (blocks) {
+      return JSON.parse(blocks).blocks;
+    }
+    return [];
+  });
   const [
     selectedComponent,
     setSelectedComponent,
@@ -51,6 +60,11 @@ function App() {
       )
     );
   };
+
+  useEffect(() => {
+    const savedComponents = components.filter((component) => component.saved);
+    localStorage.setItem("blocks", JSON.stringify({ blocks: savedComponents }));
+  }, [components]);
 
   const handleCancel = () => {
     if (!selectedComponent) return;
@@ -87,6 +101,15 @@ function App() {
     }
   };
 
+  const handleUpdatePosition = (data: IUpdatePosition): void => {
+    const { id, xPos, yPos } = data;
+    setComponents((components) =>
+      components.map((component) =>
+        component.id === id ? { ...component, X: xPos, Y: yPos } : component
+      )
+    );
+  };
+
   return (
     <div tabIndex={0} onKeyUp={(e) => handleKeyPress(e)}>
       <Row style={{ height: "100vh" }}>
@@ -100,6 +123,7 @@ function App() {
                 block={component}
                 onSelect={handleSelect}
                 key={index}
+                updatePosition={handleUpdatePosition}
               />
             ))}
           </div>
