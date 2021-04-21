@@ -144,9 +144,9 @@ function App() {
       >
         {!!selectedComponent && (
           <FormComponent
-            key={uuid()}
+            key={selectedComponent.id}
             onSubmit={handleOk}
-            selectedComponent={selectedComponent}
+            selectedComponent={{ ...selectedComponent }}
           />
         )}
       </Modal>

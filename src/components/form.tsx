@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Form, Input, Button } from "antd";
 import { IDraggableComponent } from "./Draggable";
 
@@ -11,6 +11,10 @@ const FormComponent: React.FC<{
   });
 
   const { text, X, Y, fontSize, fontWeight } = blockValue;
+
+  useEffect(() => {
+    setBlockValue(selectedComponent);
+  }, [selectedComponent]);
 
   const handleChange = (e: React.FormEvent<HTMLFormElement>) => {
     setBlockValue((prev) => ({
