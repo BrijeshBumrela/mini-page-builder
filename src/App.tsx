@@ -67,7 +67,6 @@ function App() {
     id: string,
     e: React.MouseEvent<HTMLDivElement, MouseEvent>
   ) => {
-    console.log(e.button);
     const selectedComponent = components.find(
       (component) => component.id === id
     );
@@ -84,18 +83,17 @@ function App() {
     }
   };
 
-  const handleKeyPress2 = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
-    console.log(e);
-    // if (e.key.toLowerCase() === 'enter' && selectedComponent) {
-    //   setShouldOpenModal(true);
-    // }
+  const handleKeyPress2 = (e: React.KeyboardEvent<HTMLDivElement>) => {
+    if (e.nativeEvent.key.toLowerCase() === 'enter' && selectedComponent) {
+      setShouldOpenModal(true);
+    }
     // if (e.key.toLowerCase() === 'delete' && selectedComponent) {
     //   setShouldOpenModal(true);
     // }
   };
 
   return (
-    <div onClick={(e) => handleKeyPress2(e)}>
+    <div tabIndex={0} onKeyPress={(e) => handleKeyPress2(e)}>
       <Row style={{ height: "100vh" }}>
         <Col span={18}>
           <div style={{ height: "100%", width: "100%" }}>
