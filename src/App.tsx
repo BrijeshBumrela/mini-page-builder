@@ -62,8 +62,10 @@ function App() {
   };
 
   const deleteBlock = (id: string) => {
-    setComponents(components => components.filter(component => component.id !== id));
-  }
+    setComponents((components) =>
+      components.filter((component) => component.id !== id)
+    );
+  };
 
   const handleSelect = (
     id: string,
@@ -77,11 +79,11 @@ function App() {
   };
 
   const handleKeyPress = (e: React.KeyboardEvent<HTMLDivElement>) => {
-    if (e.nativeEvent.key.toLowerCase() === 'enter' && selectedComponent) {
+    if (e.nativeEvent.key.toLowerCase() === "enter" && selectedComponent) {
       setShouldOpenModal(true);
     }
-    if (e.key.toLowerCase() === 'delete' && selectedComponent) {
-      deleteBlock(selectedComponent.id)
+    if (e.key.toLowerCase() === "delete" && selectedComponent) {
+      deleteBlock(selectedComponent.id);
     }
   };
 

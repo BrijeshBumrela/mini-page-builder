@@ -20,7 +20,7 @@ const Draggable: React.FC<{
   ) => void;
   selected: boolean;
 }> = ({ block, onSelect, selected }) => {
-  const { X, Y, text, fontSize, fontWeight, type, id } = block;
+  const { X, Y, text, fontSize, fontWeight, type, id, saved } = block;
 
   const element = () => {
     if (type.toLowerCase() === "label") {
@@ -47,9 +47,10 @@ const Draggable: React.FC<{
           className={"" + (selected ? "border-brijesh" : "")}
           style={{
             fontSize: Number(fontSize),
-            padding: "5px",
+            padding: "10px",
             fontWeight,
-            outline: "none",
+            backgroundColor: "#0044C1",
+            color: "#fff",
           }}
         >
           {text}
@@ -58,8 +59,15 @@ const Draggable: React.FC<{
     }
   };
 
+  let optionalProp = {};
+  if (!saved) {
+    optionalProp = {
+      position: { x: Number(X), y: Number(Y) },
+    };
+  }
+
   return (
-    <ReactDraggable position={{ x: Number(X), y: Number(Y) }}>
+    <ReactDraggable {...optionalProp}>
       <div onClick={(e) => onSelect(id, e)} style={{ display: "inline-block" }}>
         {element()}
       </div>

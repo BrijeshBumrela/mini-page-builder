@@ -1,12 +1,13 @@
 .sidebar {
   border-left: 2px solid brown;
-  background: black;
+  background: #2d2d2d;
   padding: 10px;
   height: 100%;
 }
 
 .label-box {
-  background-color: whitesmoke;
+  background-color: #fff;
+  color: #000;
   min-height: 40px;
   margin: 10px 0;
   display: flex;
