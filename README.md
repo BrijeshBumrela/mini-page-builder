@@ -5,10 +5,10 @@ Created with `React (create-react-app)` and `typescript`.
 
 ### How to Run the code
 
-1. clone the repository
+1. Clone the repository
 2. Install the packages with &nbsp; `npm i`
-3. start the server with &nbsp; `npm start`
-4. the demo of the app is hosted on
+3. Start the server with &nbsp; `npm start`
+4. The demo of the app is hosted on [here](https://frontend-challenge-almabase.netlify.app/)
 
 ### Documentation
 
