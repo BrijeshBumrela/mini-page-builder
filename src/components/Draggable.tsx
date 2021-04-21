@@ -27,7 +27,7 @@ const Draggable: React.FC<{
   selected: boolean;
   updatePosition: (data: IUpdatePosition) => void;
 }> = ({ block, onSelect, selected, updatePosition }) => {
-  const { X, Y, text, fontSize, fontWeight, type, id, saved } = block;
+  const { X, Y, text, fontSize, fontWeight, type, id } = block;
 
   const element = () => {
     if (type.toLowerCase() === "label") {
@@ -66,25 +66,17 @@ const Draggable: React.FC<{
     }
   };
 
-  let optionalProp = {};
-  if (!saved) {
-    optionalProp = {
-      position: { x: Number(X), y: Number(Y) },
-    };
-  }
-
-  const handleDrag = (e: DraggableEvent, ui: DraggableData) => {
+  const handleStop = (e: DraggableEvent, ui: DraggableData) => {
     updatePosition({
       id,
-      xPos: X + ui.deltaX,
-      // @ts-ignore
-      yPos: Y + ui.deltaY,
+      xPos: Number(X) + ui.deltaX,
+      yPos: Number(Y) + ui.deltaY,
     });
   };
 
   return (
     <ReactDraggable
-      onDrag={handleDrag}
+      onDrag={handleStop}
       position={{ x: Number(X), y: Number(Y) }}
     >
       <div onClick={(e) => onSelect(id, e)} style={{ display: "inline-block" }}>

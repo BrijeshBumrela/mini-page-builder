@@ -110,6 +110,10 @@ function App() {
     );
   };
 
+  const disableAll = () => {
+    setSelectedComponent(null);
+  };
+
   return (
     <div tabIndex={0} onKeyUp={(e) => handleKeyPress(e)}>
       <Row style={{ height: "100vh" }}>
@@ -128,7 +132,7 @@ function App() {
             ))}
           </div>
         </Col>
-        <Col span={6}>
+        <Col span={6} onClick={disableAll}>
           <SideBar onCreatingNewBlock={handleNewBlockCreation} />
         </Col>
       </Row>
@@ -140,7 +144,7 @@ function App() {
       >
         {!!selectedComponent && (
           <FormComponent
-            key={selectedComponent.id}
+            key={uuid()}
             onSubmit={handleOk}
             selectedComponent={selectedComponent}
           />
