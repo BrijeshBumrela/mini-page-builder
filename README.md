@@ -1,6 +1,5 @@
 # Mini Page Builder
 
-The repository for Almabase's Frontend challenge
 Created with `React (create-react-app)` and `typescript`.
 
 ### How to Run the code
